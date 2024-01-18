@@ -1,4 +1,3 @@
-###
 In this assignment, you are asked to begin writing a basic ray casting program. 
 This program should: 
 1) Read a simple scene description from a file
