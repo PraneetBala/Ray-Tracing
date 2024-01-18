@@ -5,4 +5,5 @@ This program should:
 3. Use ray casting to determine the appropriate color to store in each pixel of the output image
 4. Write the final image to an output file in ascii PPM format
 
-Please see the accompanying instructions: [assignment1a.pdf](https://drive.google.com/drive/folders/1HuAm11HQqGH2M6FXuSPJBLzmmw7nQj6A)
+Please see the accompanying instructions: [assignment1a.pdf]
+(https://drive.google.com/file/d/1OEGEQ923rDBsMrEX2b0wX9Cy7vBG-rMG/view?usp=sharing)
