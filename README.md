@@ -18,8 +18,18 @@ This project is an offline rendering engine built to simulate physically based l
 - **Scene Parsing:** Custom parser to read `.txt` scene description files containing camera configurations, multiple light sources, vertex coordinates, and material definitions.
 
 ## 🚀 Visual Demo
-*(Add a GIF or PNG image here from one of your `.ppm` outputs like `test1.ppm` converting to a PNG!)*
-![Demo Image](link-to-your-image)
+Each of the images below was directly rendered natively by this engine by parsing the corresponding `.txt` geometric parameter files.
+
+*(Once you have converted the PPMs to PNGs and placed them in the `images/` folder, they will appear here!)*
+
+<p align="center">
+  <img src="images/test1.png" width="45%" title="Demo 1">
+  <img src="images/test2.png" width="45%" title="Demo 2">
+</p>
+<p align="center">
+  <img src="images/test3.png" width="45%" title="Demo 3">
+  <img src="images/earth.png" width="45%" title="Earth Texture Mapping">
+</p>
 
 ## 🛠️ Technical Implementation Details
 The ray tracer is built around a robust mathematical core:
