@@ -20,8 +20,6 @@ This project is an offline rendering engine built to simulate physically based l
 ## 🚀 Visual Demo
 Each of the images below was directly rendered natively by this engine by parsing the corresponding `.txt` geometric parameter files.
 
-*(Once you have converted the PPMs to PNGs and placed them in the `images/` folder, they will appear here!)*
-
 <p align="center">
   <img src="images/test1.png" width="45%" title="Demo 1">
   <img src="images/test2.png" width="45%" title="Demo 2">
