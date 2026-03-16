@@ -1,2 +1,2 @@
-out: HW1b.cpp
-	g++ -o out HW1b.cpp
+out: ray_tracer.cpp
+	g++ -o out ray_tracer.cpp

@@ -1,0 +1,11 @@
+# Compiled executables
+out
+ray_tracer
+*.exe
+
+# PPM outputs (large uncompressed renders)
+*.ppm
+
+# Build artifacts
+*.o
+*.d

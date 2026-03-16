@@ -1,57 +1,129 @@
 # C++ Recursive Ray Tracer
 
-![C++](https://img.shields.io/badge/c++-11-blue.svg)
-![Graphics](https://img.shields.io/badge/Rendering-Offline-orange)
+![C++17](https://img.shields.io/badge/C++-17-blue.svg)
+![Rendering](https://img.shields.io/badge/Rendering-Offline-orange)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-> **A custom, from-scratch 3D recursive ray tracer written entirely in C++ without external graphics APIs.**
+> A physically based, recursive ray tracer built entirely from scratch in C++ — no external graphics APIs.
 
-## 📋 Overview
-This project is an offline rendering engine built to simulate physically based light transport. Rather than relying on OpenGL or DirectX, this engine calculates pixel colors by mathematically casting rays from a virtual camera into a defined 3D scene, computing intersections with mathematical primitives, and simulating complex light bounces.
+---
 
-### Core Features Implemented
-- **Recursive Ray Tracing:** Supports deep recursion for multi-bounce light paths (Reflection and Refraction).
-- **Advanced Illumination:** Implements the extended **Phong Illumination Model** computing ambient, diffuse, and specular reflection components.
-- **Geometric Intersections:** 
-  - Mathematically precise Ray-Sphere intersections.
-  - Ray-Triangle and Ray-Polygon intersections for arbitrary 3D meshes.
-- **Material Properties:** Supports complex materials including colored diffuse, reflective metallic surfaces, and transmissive refractive materials (e.g., glass, water).
-- **Scene Parsing:** Custom parser to read `.txt` scene description files containing camera configurations, multiple light sources, vertex coordinates, and material definitions.
+## Rendered Output
 
-## 🚀 Visual Demo
-Each of the images below was directly rendered natively by this engine by parsing the corresponding `.txt` geometric parameter files.
+Each image below was produced by the engine from a plain-text scene description file.
 
 <p align="center">
-  <img src="images/test1.png" width="45%" title="Demo 1">
-  <img src="images/test2.png" width="45%" title="Demo 2">
+  <img src="images/test1.png" width="45%" title="Sphere scene with Blinn-Phong shading">
+  <img src="images/test2.png" width="45%" title="Reflective and refractive materials">
 </p>
 <p align="center">
-  <img src="images/test3.png" width="45%" title="Demo 3">
-  <img src="images/earth.png" width="45%" title="Earth Texture Mapping">
+  <img src="images/test3.png" width="45%" title="Mixed geometry with shadows">
+  <img src="images/earth.png" width="45%" title="Spherical texture mapping — Earth">
 </p>
 
-## 🛠️ Technical Implementation Details
-The ray tracer is built around a robust mathematical core:
-- Custom 3D Vector and Matrix algebra classes.
-- Barycentric coordinate calculation for polygon intersection testing.
-- Snell's Law implementation for calculating physically accurate refraction vectors.
-- Output generation natively exporting to the `PPM` image format.
+---
 
-## 🏃‍♂️ Usage
+## Features
 
-### Compilation
-A `Makefile` is provided for easy compilation on Linux/Mac or using MSYS2 on Windows.
+| Feature | Description |
+|---|---|
+| Recursive ray tracing | Up to 10 bounce depth for reflection and refraction |
+| Blinn-Phong illumination | Ambient, diffuse, and specular components per light |
+| Fresnel reflectance | Schlick approximation for angle-dependent reflectivity |
+| Snell's Law refraction | Physically accurate transmission with total internal reflection |
+| Shadow computation | Shadow rays against all occluders with transparency support |
+| Geometry | Ray–sphere and ray–triangle intersections |
+| Triangle meshes | Flat and smooth (interpolated normal) shading |
+| Texture mapping | Spherical UV for spheres, barycentric interpolation for triangles |
+| Scene format | Custom `.txt` scene description files |
+| Output | Uncompressed PPM image files |
+
+---
+
+## Project Structure
+
+```
+Ray-Tracing/
+├── 01-ray-casting/           # Basic ray casting — camera, rays, FOV
+├── 02-illumination-shadows/  # Blinn-Phong shading + shadow rays
+├── 03-mesh-textures/         # Triangle meshes, smooth normals, texture mapping
+├── 04-reflection-refraction/ # Full ray tracer — Fresnel, Snell's Law, recursion
+├── modern/                   # Modernized C++17 rewrite (Vec3 type, constexpr, std::filesystem)
+└── images/                   # Reference renders
+```
+
+Each numbered stage is self-contained and builds progressively on the previous one.
+
+---
+
+## Build & Run
+
+### Requirements
+- GCC 7+ or Clang 6+ with C++17 support
+- GNU Make
+
+### Original implementation (04-reflection-refraction)
 ```bash
+cd 04-reflection-refraction
 make
+./out test1.txt
 ```
 
-### Running a Scene
-The compiled executable takes a `.txt` scene definition file as input.
+### Modernized version (modern/)
 ```bash
-./out test0.txt
+cd modern
+make
+./ray_tracer ../04-reflection-refraction/test1.txt
 ```
-This command parses the scene geometry and light setup, renders the image, and outputs a corresponding `test0.ppm` file.
 
-## 📂 Project Structure
-- `HW1d.cpp`: The core ray tracing engine containing the intersection math, recursive color calculation, and the `main` rendering loop.
-- `test*.txt`: Example 3D scenes defining geometry, materials, and lights.
-- `*.ppm`: The uncompressed image outputs generated by the renderer.
+Both executables take a `.txt` scene file and write a `.ppm` image to the same directory.
+
+---
+
+## Scene File Format
+
+Scene files define the camera, lights, geometry, and materials in plain text:
+
+```
+eye       0 2 4
+viewdir   0 -0.7 -1
+updir     0 1 0
+vfov      90
+imsize    800 800
+bkgcolor  0.2 0.2 0.2
+
+light     0 -1 -1  0  1 1 1
+mtlcolor  0.1 0.3 0.8  1 1 1  0.1 0.7 0.5 32  1.0 1.0
+
+sphere    0 0 -3  1
+```
+
+| Keyword | Description |
+|---|---|
+| `eye` | Camera position |
+| `viewdir` | Viewing direction |
+| `vfov` | Vertical field of view (degrees) |
+| `imsize` | Output image width and height |
+| `bkgcolor` | Background color (RGB 0–1) |
+| `light` | Position, type (0=directional, 1=point), RGB color |
+| `mtlcolor` | Diffuse RGB, specular RGB, ka kd ks shininess, alpha, eta |
+| `sphere` | Center XYZ, radius |
+| `v / vn / vt` | Vertex, normal, UV coordinate |
+| `f` | Triangle face (v/t/n indices, 1-based) |
+| `texture` | Path to a PPM texture file |
+
+---
+
+## Modernized Rewrite
+
+The `modern/` folder contains a C++17 rewrite of the final renderer with the following improvements over the 2019 original:
+
+- **`Vec3` math type** with operator overloads, replacing raw C-style float arrays and manual `Cross`/`Dot`/`Normalize` calls throughout
+- **`constexpr` constants** replacing `#define PI` and `#define epsilon`
+- **`std::optional<HitRecord>`** for intersection results, eliminating sentinel values like `100000`
+- **`std::filesystem`** for output path construction
+- **`std::clamp`** for pixel value clamping
+- **Named, purpose-clear structs** — `Ray`, `Material`, `Sphere`, `Light`, `Face`, `Texture`, `HitRecord`
+- **Möller–Trumbore** ray–triangle intersection replacing the plane-then-barycentric approach
+- **Removed all commented-out debug code**
+- Compiles cleanly under `-std=c++17 -Wall -Wextra`
