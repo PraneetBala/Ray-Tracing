@@ -124,6 +124,6 @@ The `modern/` folder contains a C++17 rewrite of the final renderer with the fol
 - **`std::filesystem`** for output path construction
 - **`std::clamp`** for pixel value clamping
 - **Named, purpose-clear structs** — `Ray`, `Material`, `Sphere`, `Light`, `Face`, `Texture`, `HitRecord`
-- **Möller–Trumbore** ray–triangle intersection replacing the plane-then-barycentric approach
+- **Möller-Trumbore** ray-triangle intersection replacing the plane-then-barycentric approach
 - **Removed all commented-out debug code**
 - Compiles cleanly under `-std=c++17 -Wall -Wextra`
