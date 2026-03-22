@@ -4,7 +4,7 @@
 ![Rendering](https://img.shields.io/badge/Rendering-Offline-orange)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-> A physically based, recursive ray tracer built entirely from scratch in C++ — no external graphics APIs.
+> A physically based, recursive ray tracer built entirely from scratch in C++, no external graphics APIs.
 
 ---
 
